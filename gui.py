@@ -9,7 +9,10 @@ from model import detect_gestures
 def start_gui():
     root = tk.Tk()
     root.title("Gesture Recognition Trainer")
-    root.geometry("300x300")
+    root.geometry("600x150") 
+
+    title_label = tk.Label(root, text="Hand Gesture Recognition System", font=("Helvetica", 16))
+    title_label.pack(pady=10)
 
     def start_training():
         new_action = simpledialog.askstring("Input", "Enter the new gesture name:", parent=root)
@@ -23,16 +26,23 @@ def start_gui():
         print("Training model based on all collected data...")
         train_model()  # This will retrain the model with all collected data and save a new action.h5
 
-    # Create buttons for each mode
-    train_button = tk.Button(root, text="Collect Gesture Data", command=start_training)
-    detect_button = tk.Button(root, text="Detection Mode", command=detect_gestures)
-    mouse_button = tk.Button(root, text="Mouse Control Mode", command=control_mouse)
-    retrain_button = tk.Button(root, text="Train Model", command=retrain_model)  # Button to retrain the model
+    # Create a frame to hold the buttons in a single row
+    button_frame = tk.Frame(root)
+    button_frame.pack(pady=20)  # Add padding around the frame
 
-    # Add buttons to the GUI
-    train_button.pack(pady=20)
-    detect_button.pack(pady=20)
-    mouse_button.pack(pady=20)
-    retrain_button.pack(pady=20)  # Add retrain button to GUI
+    # Create buttons for each mode and add them to the frame
+    train_button = tk.Button(button_frame, text="Collect Gesture Data", command=start_training)
+    detect_button = tk.Button(button_frame, text="Detection Mode", command=detect_gestures)
+    mouse_button = tk.Button(button_frame, text="Mouse Control Mode", command=lambda: control_mouse(invert_x=True, invert_y=False))
+    retrain_button = tk.Button(button_frame, text="Train Model", command=retrain_model)  # Button to retrain the model
+
+    # Pack buttons in a row inside the frame
+    train_button.pack(side=tk.LEFT, padx=10)
+    detect_button.pack(side=tk.LEFT, padx=10)
+    mouse_button.pack(side=tk.LEFT, padx=10)
+    retrain_button.pack(side=tk.LEFT, padx=10)
 
     root.mainloop()
+
+# Run the GUI
+start_gui()

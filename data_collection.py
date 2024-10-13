@@ -15,7 +15,7 @@ def setup_directories(new_action, no_of_sequences):
 
 # Function to collect data for training (with 30 frames per sequence)
 def collect_data(new_action, no_of_sequences=30):
-    sequence_length = 30  # Fixed number of frames per sequence
+    sequence_length = 30  
     cap = cv.VideoCapture(0)
     with mp_holistic.Holistic(min_detection_confidence=0.5, min_tracking_confidence=0.5) as holistic:
         setup_directories(new_action, no_of_sequences)
@@ -28,7 +28,7 @@ def collect_data(new_action, no_of_sequences=30):
                 cv.imshow('Frame', frame)
                 cv.waitKey(1000)  # 1 second delay
 
-            for frame_num in range(sequence_length):  # Use fixed sequence length of 30
+            for frame_num in range(sequence_length):
                 ret, frame = cap.read()
                 if not ret:
                     break
